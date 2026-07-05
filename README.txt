@@ -1,0 +1,1 @@
+Replace placeholder files with your logo and images.
