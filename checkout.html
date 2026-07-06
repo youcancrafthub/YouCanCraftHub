@@ -176,8 +176,65 @@ class="pay-btn"
 
 onclick="confirmOrder()">
 
-Confirm Order
+function confirmOrder(){
 
+const name=document.getElementById("name").value;
+const phone=document.getElementById("phone").value;
+const address=document.getElementById("address").value;
+const utr=document.getElementById("utr").value;
+
+if(name==""||phone==""||address==""||utr==""){
+
+alert("Please fill all details");
+return;
+
+}
+
+let products="";
+
+cart.forEach(item=>{
+
+products+=item.name+" x "+item.quantity+"\n";
+
+});
+
+const orderNo="YCH-"+Date.now();
+
+emailjs.send(
+
+"service_9j52h4z",
+
+"template_lzimfms",
+
+{
+
+order_no:orderNo,
+name:name,
+phone:phone,
+address:address,
+products:products,
+total:total,
+utr:utr
+
+}
+
+).then(function(){
+
+alert("Order Placed Successfully!\nOrder No: "+orderNo);
+
+localStorage.removeItem("cart");
+
+window.location.href="index.html";
+
+}).catch(function(error){
+
+alert("Unable to send order. Please try again.");
+
+console.log(error);
+
+});
+
+}
 </button>
 
 </div>
