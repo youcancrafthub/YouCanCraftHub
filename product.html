@@ -566,3 +566,58 @@ Everything for Jewellery Making
 </script>
 
 <!-- PART 2 STARTS BELOW -->
+// ===============================
+// CART FUNCTIONS
+// ===============================
+
+function addToCart(id){
+
+    const product = products.find(p => p.id === id);
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existing = cart.find(item => item.id === id);
+
+    if(existing){
+        existing.quantity += 1;
+    }else{
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(product.name + " added to cart 🛒");
+
+    updateCartCount();
+
+}
+
+// ===============================
+// CART COUNT
+// ===============================
+
+function updateCartCount(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let total = 0;
+
+    cart.forEach(item=>{
+        total += item.quantity;
+    });
+
+    const cartCount = document.getElementById("cartCount");
+
+    if(cartCount){
+        cartCount.innerText = total;
+    }
+
+}
+
+window.onload = updateCartCount;
